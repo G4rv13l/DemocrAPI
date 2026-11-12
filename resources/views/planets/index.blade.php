@@ -1,28 +1,28 @@
 {{-- Page « liste » : elle reprend le modèle base.blade.php --}}
 @extends('planets.base')
 
-@section('title', 'Liste des planètes')
+@section('title', 'Planet list')
 
 @section('content')
-    <h1>Planètes</h1>
+    <h1>Planets</h1>
 
     {{-- Si la collection est vide (aucune planète importée), on affiche un message --}}
     @if ($planets->isEmpty())
         <p class="message">
-            Aucune planète en base. Lance d'abord la commande : php artisan planets:import
+            No planets in the database. Run this command first: php artisan planets:import
         </p>
     @else
-        <p>{{ $planets->count() }} planètes</p>
+        <p>{{ $planets->count() }} planets</p>
 
-        <div class="tableau-conteneur">
+        <div class="table-container">
             <table>
                 <thead>
                     <tr>
-                        <th>N°</th>
-                        <th>Nom</th>
-                        <th>Secteur</th>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Sector</th>
                         <th>Faction</th>
-                        <th>Joueurs</th>
+                        <th>Players</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -32,11 +32,11 @@
                         <tr>
                             <td>{{ $planet->game_index }}</td>
                             {{-- ?? affiche la valeur de droite si la colonne est vide (null) --}}
-                            <td>{{ $planet->name ?? 'Sans nom' }}</td>
+                            <td>{{ $planet->name ?? 'Unnamed' }}</td>
                             <td>{{ $planet->sector ?? '-' }}</td>
-                            <td>{{ $factions[$planet->owner] ?? 'Inconnue' }}</td>
+                            <td>{{ $factions[$planet->owner] ?? 'Unknown' }}</td>
                             <td>{{ $planet->players ?? '-' }}</td>
-                            <td><a href="{{ route('planets.show', $planet->game_index) }}">détail</a></td>
+                            <td><a href="{{ route('planets.show', $planet->game_index) }}">details</a></td>
                         </tr>
                     @endforeach
                 </tbody>

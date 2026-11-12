@@ -1,51 +1,51 @@
 {{-- Page « détail » : toutes les informations d'une planète --}}
 @extends('planets.base')
 
-@section('title', $planet->name ?? 'Planète sans nom')
+@section('title', $planet->name ?? 'Unnamed planet')
 
 @section('content')
-    <p><a href="{{ route('planets.index') }}">&larr; Retour à la liste</a></p>
+    <p><a href="{{ route('planets.index') }}">&larr; Back to the list</a></p>
 
-    <h1>{{ $planet->name ?? 'Planète sans nom' }}</h1>
+    <h1>{{ $planet->name ?? 'Unnamed planet' }}</h1>
 
-    <h2>Informations générales</h2>
-    <dl class="infos">
-        <dt>Numéro dans le jeu</dt>
+    <h2>General information</h2>
+    <dl class="info-list">
+        <dt>Game index</dt>
         <dd>{{ $planet->game_index }}</dd>
 
-        <dt>Secteur</dt>
+        <dt>Sector</dt>
         <dd>{{ $planet->sector ?? '-' }}</dd>
 
         <dt>Biome</dt>
         <dd>{{ $planet->biome_slug ?? '-' }}</dd>
 
-        <dt>Description du biome</dt>
+        <dt>Biome description</dt>
         <dd>{{ $planet->biome_description ?? '-' }}</dd>
     </dl>
 
-    <h2>Conditions environnementales</h2>
+    <h2>Environmental conditions</h2>
     {{-- environmentals est un tableau (colonne JSON) : on le parcourt avec @foreach --}}
     @if (!empty($planet->environmentals))
-        <ul class="liste-env">
+        <ul class="env-list">
             @foreach ($planet->environmentals as $environmental)
                 <li>
-                    <strong>{{ $environmental['name'] ?? 'Sans nom' }}</strong>
+                    <strong>{{ $environmental['name'] ?? 'Unnamed' }}</strong>
                     : {{ $environmental['description'] ?? '' }}
                 </li>
             @endforeach
         </ul>
     @else
-        <p>Aucune condition particulière.</p>
+        <p>No special conditions.</p>
     @endif
 
-    <h2>État de la guerre</h2>
+    <h2>War status</h2>
     {{-- war_synced_at est vide si la guerre n'a jamais été synchronisée pour cette planète --}}
     @if ($planet->war_synced_at)
-        <dl class="infos">
+        <dl class="info-list">
             <dt>Faction</dt>
-            <dd>{{ $factions[$planet->owner] ?? 'Inconnue' }}</dd>
+            <dd>{{ $factions[$planet->owner] ?? 'Unknown' }}</dd>
 
-            <dt>Santé</dt>
+            <dt>Health</dt>
             <dd>
                 {{ $planet->health ?? '-' }} / {{ $planet->max_health ?? '-' }}
                 {{-- On évite une division par zéro --}}
@@ -54,24 +54,24 @@
                 @endif
             </dd>
 
-            <dt>Régénération par seconde</dt>
+            <dt>Regeneration per second</dt>
             <dd>{{ $planet->regen_per_second ?? '-' }}</dd>
 
-            <dt>Joueurs</dt>
+            <dt>Players</dt>
             <dd>{{ $planet->players ?? '-' }}</dd>
 
             <dt>Position (x, y)</dt>
             <dd>{{ $planet->position_x ?? '-' }} ; {{ $planet->position_y ?? '-' }}</dd>
 
-            <dt>Dernière synchronisation</dt>
-            <dd>{{ $planet->war_synced_at->format('d.m.Y H:i') }}</dd>
+            <dt>Last sync</dt>
+            <dd>{{ $planet->war_synced_at->format('Y-m-d H:i') }}</dd>
         </dl>
     @else
-        <p class="message">Pas de données de guerre pour cette planète.</p>
+        <p class="message">No war data for this planet.</p>
     @endif
 
-    <p class="petit">
-        Enregistrée le {{ $planet->created_at->format('d.m.Y H:i') }},
-        modifiée le {{ $planet->updated_at->format('d.m.Y H:i') }}.
+    <p class="note">
+        Created on {{ $planet->created_at->format('Y-m-d H:i') }},
+        updated on {{ $planet->updated_at->format('Y-m-d H:i') }}.
     </p>
 @endsection

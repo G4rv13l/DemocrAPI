@@ -1,11 +1,11 @@
 {{-- Modèle commun à toutes les pages : menu en haut, pied de page en bas --}}
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     {{-- Cette ligne rend la page lisible sur mobile --}}
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Democrapi - @yield('title', 'Planètes')</title>
+    <title>Democrapi - @yield('title', 'Planets')</title>
     {{-- asset() construit l'adresse du fichier qui se trouve dans le dossier public --}}
     <link rel="stylesheet" href="{{ asset('style.css') }}">
 </head>
@@ -13,17 +13,17 @@
     <header class="menu">
         <span class="logo">DEMOCRAPI</span>
         <nav>
-            <a href="{{ route('planets.index') }}">Planètes</a>
+            <a href="{{ route('planets.index') }}">Planets</a>
         </nav>
     </header>
 
-    <main class="contenu">
+    <main class="content">
         {{-- Chaque page enfant insère son contenu ici --}}
         @yield('content')
     </main>
 
-    <footer class="pied">
-        Pour la Super Terre ! Projet scolaire ESIG, données issues de la base locale.
+    <footer class="site-footer">
+        For Super Earth! ESIG school project, data from the local database.
     </footer>
 </body>
 </html>

@@ -11,10 +11,10 @@ class PlanetController extends Controller
 {
     // Noms des factions : la colonne "owner" contient un numéro (voir la migration)
     private const FACTIONS = [
-        1 => 'Humains',
-        2 => 'Terminides',
-        3 => 'Automates',
-        4 => 'Illuminés',
+        1 => 'Humans',
+        2 => 'Terminids',
+        3 => 'Automatons',
+        4 => 'Illuminate',
     ];
 
     // Affiche la liste de toutes les planètes
@@ -23,7 +23,7 @@ class PlanetController extends Controller
         // orderBy trie par numéro de planète, get() récupère le résultat
         $planets = Planet::orderBy('game_index')->get();
 
-        return view('planets.liste', [
+        return view('planets.index', [
             'planets' => $planets,
             'factions' => self::FACTIONS,
         ]);
