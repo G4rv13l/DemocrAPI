@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -16,7 +17,17 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions): void {
+        // Les erreurs des routes /api/* sont renvoyées en JSON plutôt qu'en page HTML
         $exceptions->shouldRenderJsonWhen(
             fn (Request $request) => $request->is('api/*') || $request->expectsJson(),
         );
+
+        // 404 de l'API : on renvoie un message neutre, sans détail interne
+        // (nom des classes, fichiers...). Ça couvre les planètes inexistantes
+        // (/api/planets/9999) comme les routes inconnues (/api/n-importe-quoi).
+        $exceptions->render(function (NotFoundHttpException $e, Request $request) {
+            if ($request->is('api/*')) {
+                return response()->json(['message' => 'Sweet liberty! Resource not found!'], 404);
+            }
+        });
     })->create();
