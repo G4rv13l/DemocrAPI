@@ -10,5 +10,5 @@ Route::get('/', function () {
 // Liste des planètes (route nommée : planets.index)
 Route::get('/planets', [PlanetController::class, 'index'])->name('planets.index');
 
-// Détail d'une planète, {planet} est l'id de la planète (route nommée : planets.show)
-Route::get('/planets/{planet}', [PlanetController::class, 'show'])->name('planets.show');
+// Détail d'une planète, {planet} est le numéro de la planète dans le jeu (game_index)
+Route::get('/planets/{planet:game_index}', [PlanetController::class, 'show'])->name('planets.show');

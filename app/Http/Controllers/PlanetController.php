@@ -30,8 +30,8 @@ class PlanetController extends Controller
     }
 
     // Affiche le détail d'une planète.
-    // Laravel retrouve tout seul la planète grâce à l'id présent dans l'URL
-    // (on appelle ça le "route model binding"). Si l'id n'existe pas : erreur 404.
+    // Laravel retrouve tout seul la planète grâce au game_index présent dans l'URL
+    // (on appelle ça le "route model binding"). Si le numéro n'existe pas : erreur 404.
     public function show(Planet $planet): View
     {
         return view('planets.detail', [

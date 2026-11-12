@@ -36,7 +36,7 @@
                             <td>{{ $planet->sector ?? '-' }}</td>
                             <td>{{ $factions[$planet->owner] ?? 'Inconnue' }}</td>
                             <td>{{ $planet->players ?? '-' }}</td>
-                            <td><a href="{{ route('planets.show', $planet) }}">détail</a></td>
+                            <td><a href="{{ route('planets.show', $planet->game_index) }}">détail</a></td>
                         </tr>
                     @endforeach
                 </tbody>
