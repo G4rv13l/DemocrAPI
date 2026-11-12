@@ -18,11 +18,14 @@ class ImportPlanets extends Command
     public function handle(): int
     {
         $baseUrl = 'https://helldiverstrainingmanual.com/api/v1';
-
+            // 1. Appel des 3 endpoints de l'API (arrêt si l'un d'eux échoue)
         try {
             $this->info('Récupération des planètes...');
             $planets = Http::timeout(20)->get("{$baseUrl}/planets")->throw()->json();
-
+            // timeout(20) : on abandonne après 20 secondes sans réponse
+            // get()       : requête HTTP GET
+            // throw()     : lève une exception si l'API répond avec une erreur (404, 500...)
+            // json()      : transforme la réponse JSON en tableau PHP
             $this->info('Récupération de l\'état de la guerre...');
             $status = Http::timeout(20)->get("{$baseUrl}/war/status")->throw()->json();
 
@@ -33,11 +36,12 @@ class ImportPlanets extends Command
 
             return self::FAILURE;
         }
-
+        // 2. Indexation des listes de guerre par "index" pour retrouver chaque planète rapidement
         // On range les listes de guerre par index pour retrouver chaque planète
         $statusByIndex = collect($status['planetStatus'] ?? [])->keyBy('index');
         $infoByIndex = collect($info['planetInfos'] ?? [])->keyBy('index');
 
+        // 3. Liste unique et triée de tous les index (planètes + état de la guerre)
         // Union des index des deux sources (certaines planètes ne sont que dans l'une)
         $indexes = collect(array_keys($planets))
             ->map(fn ($index) => (int) $index)
@@ -48,6 +52,7 @@ class ImportPlanets extends Command
 
         $syncedAt = now();
 
+        // 4. Enregistrement en base : tout ou rien grâce à la transaction
         // Transaction : si une erreur survient au milieu, rien n'est enregistré
         DB::transaction(function () use ($indexes, $planets, $statusByIndex, $infoByIndex, $syncedAt) {
             foreach ($indexes as $index) {
