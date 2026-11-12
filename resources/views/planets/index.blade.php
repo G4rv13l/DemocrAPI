@@ -34,7 +34,7 @@
                             {{-- ?? affiche la valeur de droite si la colonne est vide (null) --}}
                             <td>{{ $planet->name ?? 'Unnamed' }}</td>
                             <td>{{ $planet->sector ?? '-' }}</td>
-                            <td>{{ $factions[$planet->owner] ?? 'Unknown' }}</td>
+                            <td>{{ $planet->faction()?->label() ?? 'Unknown' }}</td>
                             <td>{{ $planet->players ?? '-' }}</td>
                             <td><a href="{{ route('planets.show', $planet->game_index) }}">details</a></td>
                         </tr>

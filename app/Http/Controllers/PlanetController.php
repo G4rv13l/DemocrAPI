@@ -9,14 +9,6 @@ use Illuminate\View\View;
 // Il n'appelle jamais l'API externe (c'est le rôle de la commande planets:import).
 class PlanetController extends Controller
 {
-    // Noms des factions : la colonne "owner" contient un numéro (voir la migration)
-    private const FACTIONS = [
-        1 => 'Humans',
-        2 => 'Terminids',
-        3 => 'Automatons',
-        4 => 'Illuminate',
-    ];
-
     // Affiche la liste de toutes les planètes
     public function index(): View
     {
@@ -25,7 +17,6 @@ class PlanetController extends Controller
 
         return view('planets.index', [
             'planets' => $planets,
-            'factions' => self::FACTIONS,
         ]);
     }
 
@@ -36,7 +27,6 @@ class PlanetController extends Controller
     {
         return view('planets.detail', [
             'planet' => $planet,
-            'factions' => self::FACTIONS,
         ]);
     }
 }

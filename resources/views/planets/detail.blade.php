@@ -43,7 +43,7 @@
     @if ($planet->war_synced_at)
         <dl class="info-list">
             <dt>Faction</dt>
-            <dd>{{ $factions[$planet->owner] ?? 'Unknown' }}</dd>
+            <dd>{{ $planet->faction()?->label() ?? 'Unknown' }}</dd>
 
             <dt>Health</dt>
             <dd>
