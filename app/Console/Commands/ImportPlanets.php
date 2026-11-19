@@ -13,26 +13,26 @@ class ImportPlanets extends Command
 {
     protected $signature = 'planets:import';
 
-    protected $description = 'Importe les planètes et l\'état de la guerre depuis l\'API du Helldivers Training Manual';
+    protected $description = 'Imports planets and war status from the Helldivers Training Manual API';
 
     public function handle(): int
     {
         $baseUrl = 'https://helldiverstrainingmanual.com/api/v1';
             // 1. Appel des 3 endpoints de l'API (arrêt si l'un d'eux échoue)
         try {
-            $this->info('Récupération des planètes...');
+            $this->info('Fetching planets...');
             $planets = Http::timeout(20)->get("{$baseUrl}/planets")->throw()->json();
             // timeout(20) : on abandonne après 20 secondes sans réponse
             // get()       : requête HTTP GET
             // throw()     : lève une exception si l'API répond avec une erreur (404, 500...)
             // json()      : transforme la réponse JSON en tableau PHP
-            $this->info('Récupération de l\'état de la guerre...');
+            $this->info('Fetching war status...');
             $status = Http::timeout(20)->get("{$baseUrl}/war/status")->throw()->json();
 
-            $this->info('Récupération des infos de la guerre...');
+            $this->info('Fetching war info...');
             $info = Http::timeout(20)->get("{$baseUrl}/war/info")->throw()->json();
         } catch (RequestException|ConnectionException $e) {
-            $this->error('Impossible de joindre l\'API : '.$e->getMessage());
+            $this->error('Unable to reach the API: '.$e->getMessage());
 
             return self::FAILURE;
         }
@@ -81,7 +81,7 @@ class ImportPlanets extends Command
             }
         });
 
-        $this->info("{$indexes->count()} planètes importées ou mises à jour.");
+        $this->info("{$indexes->count()} planets imported or updated.");
 
         return self::SUCCESS;
     }

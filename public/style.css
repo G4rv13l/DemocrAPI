@@ -54,7 +54,7 @@ a {
 }
 
 /* Contenu principal */
-.contenu {
+.content {
     flex: 1;
     width: 100%;
     max-width: 900px;
@@ -76,7 +76,7 @@ h2 {
 }
 
 /* Tableau de la liste (défile sur les petits écrans au lieu de déborder) */
-.tableau-conteneur {
+.table-container {
     overflow-x: auto;
 }
 
@@ -104,24 +104,24 @@ tbody tr:hover {
 }
 
 /* Page de détail : libellé / valeur */
-.infos {
+.info-list {
     background: var(--fond-clair);
     border: 1px solid var(--bordure);
     padding: 12px 16px;
     margin: 0;
 }
 
-.infos dt {
+.info-list dt {
     color: var(--texte-doux);
     font-size: 0.85rem;
     margin-top: 10px;
 }
 
-.infos dd {
+.info-list dd {
     margin: 0;
 }
 
-.liste-env li {
+.env-list li {
     margin-bottom: 8px;
 }
 
@@ -131,14 +131,14 @@ tbody tr:hover {
     padding: 12px;
 }
 
-.petit {
+.note {
     color: var(--texte-doux);
     font-size: 0.8rem;
     margin-top: 28px;
 }
 
 /* Pied de page */
-.pied {
+.site-footer {
     text-align: center;
     color: var(--texte-doux);
     font-size: 0.8rem;
@@ -148,13 +148,13 @@ tbody tr:hover {
 
 /* Un peu plus d'espace sur les grands écrans */
 @media (min-width: 600px) {
-    .infos {
+    .info-list {
         display: grid;
         grid-template-columns: 220px 1fr;
         gap: 6px 16px;
     }
 
-    .infos dt {
+    .info-list dt {
         margin-top: 0;
     }
 }

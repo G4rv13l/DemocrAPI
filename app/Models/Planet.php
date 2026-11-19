@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Faction;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 
@@ -29,5 +30,13 @@ class Planet extends Model
             'environmentals' => 'array',
             'war_synced_at' => 'datetime',
         ];
+    }
+
+    // Renvoie la faction qui contrôle la planète, ou null si elle est inconnue.
+    // tryFrom() ne plante pas si le numéro n'existe pas dans l'enum
+    // (par exemple si le jeu ajoute une nouvelle faction) : il renvoie null.
+    public function faction(): ?Faction
+    {
+        return $this->owner === null ? null : Faction::tryFrom($this->owner);
     }
 }
